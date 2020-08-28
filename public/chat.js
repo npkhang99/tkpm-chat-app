@@ -1,4 +1,3 @@
-
 $(function(){
    	//make connection
 	var socket = io.connect('http://localhost:3000')
@@ -13,14 +12,26 @@ $(function(){
 
 	//Emit message
 	send_message.click(function(){
-		socket.emit('new_message', {message : message.val()})
+		var hash_value = CryptoJS.SHA256(message.val()).toString()
+		var cipher_text = CryptoJS.AES.encrypt(message.val(), "Sleighs83Horton33Gumdrop").toString()
+		socket.emit('new_message', {message: cipher_text, hash: hash_value})
 	})
 
 	//Listen on new_message
 	socket.on("new_message", (data) => {
+		console.log(data)
+
+		var bytes = CryptoJS.AES.decrypt(data.message, "Sleighs83Horton33Gumdrop")
+		var decrypted_text = bytes.toString(CryptoJS.enc.Utf8)
+		var hash_value = CryptoJS.SHA256(decrypted_text).toString()
+
+		if (hash_value !== data.hash) {
+			throw "Hash not match, message corrupted or changed"
+		}
+
 		feedback.html('');
 		message.val('');
-		chatroom.append("<p class='message'>" + data.username + ": " + data.message + "</p>")
+		chatroom.append("<p class='message'>" + data.username + ": " + decrypted_text + "</p>")
 	})
 
 	//Emit a username
@@ -38,5 +49,3 @@ $(function(){
 		feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
 	})
 });
-
-
