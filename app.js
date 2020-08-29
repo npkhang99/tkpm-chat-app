@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
           //if (err) throw err;
           console.log("Connected!");
         
-          var save = "Insert into allmessage (username, textmess) " + " Values ('" + socket.username + "','" + data.hash +"')"; 
+          var save = "Insert into allmessage (username, textmess) " + " Values ('" + socket.username + "','" + data.message +"')"; 
           conn.query(save, function(err, results) {
             if (err) throw err;
             console.log("Insert a record!");
