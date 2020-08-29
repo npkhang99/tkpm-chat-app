@@ -10,6 +10,12 @@ $(function(){
 	var chatroom = $("#chatroom")
 	var feedback = $("#feedback")
 
+	socket.on('load_data',(data) => {
+		var bytes = CryptoJS.AES.decrypt(data.text, "Sleighs83Horton33Gumdrop")
+		var decrypted_text = bytes.toString(CryptoJS.enc.Utf8)
+		chatroom.append("<p class='message'>" + data.name + ": " + decrypted_text + "</p>")
+	});
+
 	//Emit message
 	send_message.click(function(){
 		var hash_value = CryptoJS.SHA256(message.val()).toString()
@@ -37,6 +43,7 @@ $(function(){
 	//Emit a username
 	send_username.click(function(){
 		socket.emit('change_username', {username : username.val()})
+
 	})
 
 	//Emit typing
