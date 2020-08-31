@@ -4,33 +4,41 @@
     <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
     <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="style.css" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script src="crypto-js/crypto-js.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
     <title>Simple Chat App</title>
   </head>
 
   <body>
-    <header>
-      <h1>Super Chat</h1>
-    </header>
-
-    <section>
-      <div id="change_username">
-	<input id="username" type="text" />
-	<button id="send_username" type="button">Change username</button>
+    <div class="container border rounded" style="padding: 10px 50px;">
+      <header>
+        <h1>Super Chat</h1>
+      </header>
+      <div class="row" id="change_username">
+        <input class="rounded" id="username" type="text"/>
+        <button class="btn" id="send_username" type="button" style="color: white; font-weight: bold;margin-left: 10px; border: none; padding: auto 30px;">Change Username</button>
       </div>
-    </section>
 
-    <section id="chatroom">
-      <section id="feedback"></section>
-    </section>
+      <div class="row border rounded" id="chatroom" style="display: block; padding:10px 0">
+        <section id="feedback"></section>
+      </div>
 
-    
-
-    <section id="input_zone"> 
-      <input id="message" class="vertical-align" type="text" />
-      <button id="send_message" class="vertical-align" type="button">Send</button>
-    </section>
+    <div class="row" id="input_zone" >
+      <input id="message" class="rounded" type="text" style="width: 80%;" />
+      <button id="send_message" class="btn btn-dark" type="button" style="border: none; font-weight: bold; margin-left: 1%; width: 19%;">SEND</button>
+    </div>
+  </div>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="chat.js"></script>
