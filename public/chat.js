@@ -43,7 +43,6 @@ $(function(){
 	//Emit a username
 	send_username.click(function(){
 		socket.emit('change_username', {username : username.val()})
-
 	})
 
 	//Emit typing
