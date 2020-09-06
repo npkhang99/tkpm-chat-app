@@ -5,12 +5,14 @@ const app = express()
 var mysql = require('mysql');
  
 console.log('Get connection ...');
+
+require('dotenv').config()
  
 var conn = mysql.createConnection({
-    database: 'message',
-    host: "localhost",
-    user: "root",
-    password: "7762141604"
+    database: process.env.DATABASE,
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD
 }); 
 
 conn.connect(function(err) {
