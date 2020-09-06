@@ -5,12 +5,14 @@ const app = express()
 var mysql = require('mysql');
  
 console.log('Get connection ...');
- 
+
+require('dotenv').config() 
+
 var conn = mysql.createConnection({
-    database: 'message',
-    host: "localhost",
-    user: "root",
-    password: "7762141604"
+    database: process.env.DATABASE,
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD
 }); 
 
 conn.connect(function(err) {
@@ -35,10 +37,12 @@ app.get('/', (req, res) => {
 })
 app.get('/login', (req, res) => {
     res.render('login');
-  });
-app.get('/register', (req, res) => {
-res.render('register');
 });
+
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+
 //Listen on port 3000
 server = app.listen(3000, () => {
     console.log("Lisening on port 3000...")
@@ -108,9 +112,7 @@ io.on('connection', (socket) => {
             }
 
             socket.emit('load', {username: results});
-            
         });
-
     })
 
     //listen on typing
