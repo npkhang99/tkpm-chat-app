@@ -33,7 +33,12 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
     res.render('index')
 })
-
+app.get('/login', (req, res) => {
+    res.render('login');
+  });
+app.get('/register', (req, res) => {
+res.render('register');
+});
 //Listen on port 3000
 server = app.listen(3000, () => {
     console.log("Lisening on port 3000...")
@@ -81,6 +86,31 @@ io.on('connection', (socket) => {
                 console.log("Insert a record!");
             });
         });
+    })
+
+    socket.on('username_login', (data) => {
+        socket.username = data.name;
+        conn.connect(function(err) {
+            //if (err) throw err;
+            console.log("Connected!");
+            
+            var save = "Insert into account (username, pass) " + " Values ('" + socket.username + "','" + data.pass +"')"; 
+            conn.query(save, function(err, results) {
+                if (err) throw err;
+                console.log("Insert a record!");
+            });
+        });
+
+        var load = "select username from account where username = '"+ socket.username+"'"; 
+        conn.query(load, function(err, results) {
+            if (err) {
+                throw err;
+            }
+
+            socket.emit('load', {username: results});
+            
+        });
+
     })
 
     //listen on typing

@@ -19,6 +19,12 @@ body {
 
 }
 
+a{
+    color: #1A2980;
+    font-weight: bold;
+    margin: auto 10px;
+}
+
 header h1{
     font-family: 'Comfortaa', sans-serif;
     text-align: center;

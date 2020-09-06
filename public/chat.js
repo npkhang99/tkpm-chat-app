@@ -1,3 +1,4 @@
+
 $(function(){
    	//make connection
 	var socket = io.connect('http://localhost:3000')
@@ -9,7 +10,7 @@ $(function(){
 	var send_username = $("#send_username")
 	var chatroom = $("#chatroom")
 	var feedback = $("#feedback")
-
+	
 	socket.on('load_data',(data) => {
 		var bytes = CryptoJS.AES.decrypt(data.text, "Sleighs83Horton33Gumdrop")
 		var decrypted_text = bytes.toString(CryptoJS.enc.Utf8)
@@ -54,4 +55,19 @@ $(function(){
 	socket.on('typing', (data) => {
 		feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
 	})
+
+	
+	//Listen on creating an account
+	$("#btn_login").click(function(){
+		var u = $("#username_login");
+		var pw =$("#password");
+		socket.emit('username_login', {name: u.val(), pass: pw.val()});
+		
+		window.location.href="/";
+
+		socket.on('load',(data) => {
+			username.val(data.username);
+		});
+
+	});
 });
