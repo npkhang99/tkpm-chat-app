@@ -6,7 +6,7 @@ var mysql = require('mysql');
  
 console.log('Get connection ...');
 
-require('dotenv').config() 
+require('dotenv').config()
 
 var conn = mysql.createConnection({
     database: process.env.DATABASE,
