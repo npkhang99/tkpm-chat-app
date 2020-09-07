@@ -20,6 +20,8 @@
     <title>Simple Chat App</title>
   </head>
 
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <body>
     <div class="container border rounded" style="padding: 10px 50px;">
       <header>
@@ -29,14 +31,14 @@
       <form class="col-10 col-lg-8 mt-4" style="margin: 15px auto 0px; padding: 15px 0px;">
         <div class="form-group row">
             <h6 class="col-lg-3 col-xl-2 text-left mt-1"><b>Username:</b></h6>
-            <input class="form-control col-lg-9 col-xl-10" type="text" placeholder="Username" autoFocus required/>
+            <input id="username" class="form-control col-lg-9 col-xl-10" type="text" placeholder="Username" autoFocus required/>
         </div>
 
         <div class="form-group row">
             <h6 class="col-lg-3 col-xl-2 text-left mt-1"><b>Password:</b></h6>
-            <input class="form-control col-lg-9 col-xl-10" type="password" placeholder="Your password" required minlength="6"/>
+            <input id="password" class="form-control col-lg-9 col-xl-10" type="password" placeholder="Your password" required minlength="6"/>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <h6 class="col-lg-3 col-xl-2 text-left mt-1"><b>Comfirm Password:</b></h6>
             <input class="form-control col-lg-9 col-xl-10" type="password" placeholder="Confirm your password" required minlength="6"/>
         </div>
@@ -44,11 +46,11 @@
         <div class="form-group row">
             <h6 class="col-lg-3 col-xl-2 text-left mt-1"><b>Email:</b></h6>
             <input class="form-control col-lg-9 col-xl-10" type="email" placeholder="Your email" required minlength="6"/>
-        </div>
+        </div> -->
 
         <div class="row">
           <a href="/" style="margin:auto;">
-            <button id="login" class="btn btn-dark" type="button" style="border: none; font-weight: bold;">REGISTER</button>
+            <button id="btn_register" class="btn btn-dark" type="button" style="border: none; font-weight: bold;">REGISTER</button>
           </a>
         </div>
 

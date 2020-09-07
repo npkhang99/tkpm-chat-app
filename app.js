@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const CryptoJS = require("crypto-js")
+const crypto = require("crypto")
 
 // connect to database
 var mysql = require('mysql');
@@ -93,26 +95,54 @@ io.on('connection', (socket) => {
     })
 
     socket.on('username_login', (data) => {
-        socket.username = data.name;
-        conn.connect(function(err) {
-            //if (err) throw err;
-            console.log("Connected!");
-            
-            var save = "Insert into account (username, pass) " + " Values ('" + socket.username + "','" + data.pass +"')"; 
-            conn.query(save, function(err, results) {
-                if (err) throw err;
-                console.log("Insert a record!");
-            });
-        });
-
-        var load = "select username from account where username = '"+ socket.username+"'"; 
+        var load = "select * from account where username = '" + data.username + "'"; 
         conn.query(load, function(err, results) {
             if (err) {
                 throw err;
             }
 
-            socket.emit('load', {username: results});
+            console.log(results)
+
+            if (results.length !== 1) {
+                socket.emit("alert", {title: "Login failed!", message: `Username or password is incorrect`, type: "error"});
+                return;
+            }
+
+            var line = results[0]
+            var salted_password = data.password + line.salt
+            var final_password = CryptoJS.SHA512(salted_password).toString()
+
+            if (final_password !== line.pass) {
+                socket.emit("alert", {title: "Login failed!", message: `Username or password is incorrect`, type: "error"});
+                return;
+            }
+            
+            // socket.emit('loggedin', {username: data.username})
+            socket.emit("alert", {title: "Logged-in!", message: `Logged-in as ${data.username}`, type: "success", username: data.username});
+            socket.username = data.username;
         });
+    })
+    
+    socket.on('register', (data) => {
+        conn.query(`select * from account where username = "${data.username}"`, (err, results, fields) => {
+            if (results.length !== 0) {
+                socket.emit("alert", {title: "Register failed!", message: `Username already exists`, type: "error"});
+                // throw Error("Username already exists");
+            }
+            else {
+                var salt = crypto.randomBytes(16).toString("base64")
+                var salted_password = data.password + salt
+                var final_password = CryptoJS.SHA512(salted_password).toString()
+                
+                var save = `Insert into account (username, pass, salt) Values ("${data.username}", "${final_password}", "${salt}")`;
+                conn.query(save, function(err, results) {
+                    if (err) throw err;
+                    socket.emit("alert", {title: "Success!", message: `Your account has been successfully registerd`, type: "success"});
+                    console.log("Successfully registered an account");
+                });
+            }
+        })
+
     })
 
     //listen on typing

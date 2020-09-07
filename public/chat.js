@@ -56,18 +56,48 @@ $(function(){
 		feedback.html("<p><i>" + data.username + " is typing a message..." + "</i></p>")
 	})
 
+	socket.on("loggedin", (data) => {
+		swal(`Success!`, `Logged-in as ${data.username}`, "success")
+		.then((value) => {
+			window.location.href="/";
+		})
+	})
 	
-	//Listen on creating an account
+	socket.on("login_error", (data) => {
+		swal(`Failed!`, "Username or password not correct", "error")
+	})
+	
+	socket.on("alert", (data) => {
+		swal(data.title, data.message, data.type)
+		.then((value) => {
+			if (data.type === "success"){
+				window.location.href="/";
+				socket.emit("change_username", {username: data.username.val()})
+			}
+		})
+	})
+
 	$("#btn_login").click(function(){
 		var u = $("#username_login");
-		var pw =$("#password");
-		socket.emit('username_login', {name: u.val(), pass: pw.val()});
+		var pw = $("#password");
 		
-		window.location.href="/";
+		socket.emit('username_login', {username: u.val(), password: pw.val()});
+
+		socket.on('load',(data) => {
+			username.val(data.username);
+		});
+	});
+
+	$("#btn_register").click(function(){
+		var username = $("#username");
+		var password = $("#password");
+
+		socket.emit('register', {username: username.val(), password: password.val()});
 
 		socket.on('load',(data) => {
 			username.val(data.username);
 		});
 
+		// window.location.href="/";
 	});
 });

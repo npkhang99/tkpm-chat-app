@@ -4,8 +4,8 @@ use message;
 
 CREATE TABLE account (
     username nvarchar(40),
-    pass NVARCHAR(100)
-   
+    pass nvarchar(256),
+    salt nvarchar(32)
 ) ENGINE = InnoDB;
 
 CREATE TABLE allmessage (

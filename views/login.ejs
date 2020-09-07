@@ -20,6 +20,8 @@
     <title>Simple Chat App</title>
   </head>
 
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <body>
     <div class="container border rounded" style="padding: 10px 50px;">
       <header>
@@ -37,21 +39,19 @@
             <input id="password" class="form-control col-lg-9 col-xl-10" type="password" placeholder="Your password" required minlength="6"/>
         </div>
 
-        <div class="d-flex align-items-center row col-11" style="margin: 0 auto;">
+        <!-- <div class="d-flex align-items-center row col-11" style="margin: 0 auto;">
             <input class="d-flex" type="checkbox" style="margin-right: 5px;">
             <label class="d-flex" style="margin: 0px; font-size: 12px;">Remember me</label>
             <a href="#" style="margin-left: auto; font-size: 12px; color: #1A2980;">Forgot password?</a>
             
-        </div>
+        </div> -->
 
         <div class="row" style="margin: 20px auto;">
           <p>If you haven't account, you can create your account<a href="register">here</a>.</p>
         </div>
 
         <div class="row">
-         
             <button id="btn_login" class="btn btn-dark" type="button" style="border: none; font-weight: bold; margin:auto;">LOG IN</button>
-         
         </div>
 
     </form>
